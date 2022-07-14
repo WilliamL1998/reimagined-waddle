@@ -17,13 +17,13 @@ module.exports = {
             username: req.body.username
         })
             .then((thoughtData) => {
-                User.findOneAndUpdate(
-                    { _id: req.params.userId },
+                return User.findOneAndUpdate(
+                    { _id: req.body.userId },
                     { $addToSet: { thoughts: thoughtData._id } },
                     { new: true }
                 )
-                res.json(thoughtData)
             })
+            .then((userData) => res.json(userData))
     },
     updateThought(req, res) {
         Thought.findByIdAndUpdate(
